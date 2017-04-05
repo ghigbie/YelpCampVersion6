@@ -21,12 +21,13 @@ seedDB();
 app.use(require("express-session")({
     secret: "Once again my dog is super cute!",
     resave: false,
-    saveUnitialize: false
+    saveUninitialized: false
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate)); //User.authenticate comes is a method that comes with passport local mongoose
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", (req, res) =>{
     res.render("landing");
@@ -34,6 +35,15 @@ app.get("/", (req, res) =>{
 
 app.get("*", (req, res) => {
     res.render("notfound"); 
+});
+
+//=============
+//AUTH ROUTES
+//=============
+
+//show register form
+app.get("/register", (req, res) => {
+   res.render("register"); 
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
