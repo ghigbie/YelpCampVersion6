@@ -17,6 +17,17 @@ app.use(express.static(__dirname + "/public"));
 
 seedDB();
 
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Once again my dog is super cute!",
+    resave: false,
+    saveUnitialize: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate)); //User.authenticate comes is a method that comes with passport local mongoose
+
 app.get("/", (req, res) =>{
     res.render("landing");
 });
