@@ -21,6 +21,6 @@ app.get("/", (req, res) =>{
     res.render("landing");
 });
 
-app.listent(process.env.PORT, process.env.IP, () => {
+app.listen(process.env.PORT, process.env.IP, () => {
    console.log("Server is up and running!"); 
 });
