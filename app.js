@@ -56,9 +56,14 @@ app.post("/campgrounds", (req, res)=> {
     Campground.create(newCampground, (err, newlyCreated) => {
         if(err){
             console.log("THERE WAS AN ERROR - POST CAMPGROUNDS");
+            console.log(err);
+        }else{
+            res.redirect("/campgrounds");
         }
-    })
-})
+    });
+});
+//NEW - show form to create a new campground
+
 
 //=============
 //AUTH ROUTES
