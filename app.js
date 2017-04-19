@@ -33,9 +33,32 @@ app.get("/", (req, res) =>{
     res.render("landing");
 });
 
-app.get("*", (req, res) => {
-    res.render("notfound"); 
+//INDEX - show all campgrounds
+app.get("/campgrounds", (req, res) =>{
+    Campground.find({}, (err, allCampgrounds) => {
+        if(err){
+            console.log("THERE WAS A PROBLEM - CAMPGROUNDS");
+            console.log(err);
+        }else{
+            res.render("campgrounds/index", {campgrounds: allCampgrounds});
+        }
+    });
 });
+
+//CREATE - add new campground to DB
+app.post("/campgrounds", (req, res)=> {
+    //get form data
+    var name = req.body.name;
+    var image = req.body.image;
+    var description = req.body.description;
+    //creates new campground
+    var newCampground = {name: name, image: image, description: description};
+    Campground.create(newCampground, (err, newlyCreated) => {
+        if(err){
+            console.log("THERE WAS AN ERROR - POST CAMPGROUNDS");
+        }
+    })
+})
 
 //=============
 //AUTH ROUTES
@@ -44,6 +67,10 @@ app.get("*", (req, res) => {
 //show register form
 app.get("/register", (req, res) => {
    res.render("register"); 
+});
+
+app.get("*", (req, res) => {
+    res.render("notfound"); 
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
