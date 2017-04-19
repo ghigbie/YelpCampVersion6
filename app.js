@@ -68,6 +68,18 @@ app.get("campgrounds/new", (req, res)=>{
 });
 
 
+//SHOW - shows more information about one campground - this needs to be positoned AFTER "/campgrounds/new"
+app.get("/campgrounds/:id", (req, res) => {
+   Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
+       if(err){
+           console.log("THERE WAS A PROBLEM - CAMPGROUNDS/:ID");
+           console.log(err);
+       }else{
+           console.log(foundCampground);
+           res.render("campgrounds/show", {campground: foundCampground});
+       }
+   }); 
+});
 
 //=============
 //AUTH ROUTES
