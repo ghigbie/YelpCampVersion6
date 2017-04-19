@@ -126,6 +126,11 @@ app.get("/register", (req, res) => {
    res.render("register"); 
 });
 
+//handle sign-up logic
+app.post("/register", (req, res) => {
+    res.send("Signing you up...");
+});
+
 app.get("*", (req, res) => {
     res.render("notfound"); 
 });
