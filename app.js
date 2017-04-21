@@ -109,7 +109,7 @@ app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) =>{
    });
 });
 
-app.post("/campgrounds/:id/comments", (req, res) => {
+app.post("/campgrounds/:id/comments", isLoggedIn, (req, res) => {
     //lookup campground using ID
     Campground.findById(req.params.id, (err, campground) => {
         if(err){
