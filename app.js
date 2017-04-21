@@ -167,6 +167,12 @@ app.post("/login", passport.authenticate("local",
         failureRedirect: "/login"
     }), function(req, res){
 });
+
+//logout route
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/campgrounds");
+});
     
     
 
