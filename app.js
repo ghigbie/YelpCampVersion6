@@ -98,7 +98,7 @@ app.get("/campgrounds/:id", function(req, res){
 // ======================
 // COMMENTS ROUTE
 // ======================
-app.get("/campgrounds/:id/comments/new", (req, res) =>{
+app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) =>{
    //find campground by id
    Campground.findById(req.params.id, (err, campground) => {
        if(err){
@@ -167,6 +167,14 @@ app.post("/login", passport.authenticate("local",
         failureRedirect: "/login"
     }), function(req, res){
 });
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next;
+    }
+    res.redirect("/login");
+}
+
 
 //logout route
 app.get("/logout", (req, res) => {
