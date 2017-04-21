@@ -63,8 +63,8 @@ app.post("/campgrounds", (req, res)=> {
     });
 });
 //NEW - show form to create a new campground
-app.get("campgrounds/new", (req, res)=>{
-   res.render("campgroounds/new"); 
+app.get("/campgrounds/new", (req, res)=>{
+   res.render("campgrounds/new"); 
 });
 
 
@@ -79,6 +79,20 @@ app.get("/campgrounds/:id", (req, res) => {
            res.render("campgrounds/show", {campground: foundCampground});
        }
    }); 
+});
+
+// SHOW - shows more info aboout one campground - this needs to be positioned AFTER "/campgrounds/new"
+app.get("/campgrounds/:id", function(req, res){
+    // find the campground with the provided ID
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
+        if(err){
+            console.log("THERE WAS A PROBLEM - CAMPGROUNDS/:ID");
+            console.log(err);
+        }else{
+            console.log(foundCampground);
+            res.render("campgrounds/show", {campground: foundCampground});
+        }
+    });
 });
 
 // ======================
@@ -144,7 +158,17 @@ app.post("/register", (req, res) => {
 //show login form
 app.get("/login", (req, res) => {
        res.render("login"); 
-    });
+});
+
+//handling login logic
+app.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/campgrounds",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+    
+    
 
 app.get("*", (req, res) => {
     res.render("notfound"); 
