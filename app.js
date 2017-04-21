@@ -128,7 +128,22 @@ app.get("/register", (req, res) => {
 
 //handle sign-up logic
 app.post("/register", (req, res) => {
-    res.send("Signing you up...");
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, (err, user) => {
+        if(err){
+            console.log("THERE WAS A PROBLEM WITH POST /register");
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, () =>{
+            res.redirect("/campgrounds");
+        });
+    });
+    
+    //show login form
+    app.get("/login", (req, res) => {
+       res.render("login"); 
+    });
 });
 
 app.get("*", (req, res) => {
