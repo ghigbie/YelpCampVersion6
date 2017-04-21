@@ -139,12 +139,12 @@ app.post("/register", (req, res) => {
             res.redirect("/campgrounds");
         });
     });
+});
     
-    //show login form
-    app.get("/login", (req, res) => {
+//show login form
+app.get("/login", (req, res) => {
        res.render("login"); 
     });
-});
 
 app.get("*", (req, res) => {
     res.render("notfound"); 
