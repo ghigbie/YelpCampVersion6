@@ -24,8 +24,8 @@
                 <% }else{ %>
                     <% var usernameString = currentUser.username %>
                     <% var firstLetter = usernameString.charAt(0).toUpperCase() %>
-                    <% usernameString = firstLetter + usernameString.slice(0) %>
-                    <li><a>Singed In As <%= usernameString %> </a></li>
+                    <% usernameString = firstLetter + usernameString.slice(1) %>
+                    <li><a href="#">Singed In As <%= usernameString %> </a></li>
                     <li><a href="/logout">Logout</a></li>
                 <% } %>
             </ul>
