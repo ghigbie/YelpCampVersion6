@@ -26,10 +26,10 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(function(req, res, next){
-//   res.locals.currentUser = req.user;
-//   next();
-// });
+app.user((req, res, next) => {
+   res.locals.currentUser = req.user;
+   next();
+});
 
 
 passport.use(new LocalStrategy(User.authenticate())); //User.authenticate comes is a method that comes with passport local mongoose
@@ -42,7 +42,6 @@ app.get("/", (req, res) =>{
 
 //INDEX - show all campgrounds
 app.get("/campgrounds", (req, res) =>{
-    (console.log(req.user));
     Campground.find({}, (err, allCampgrounds) => {
         if(err){
             console.log("THERE WAS A PROBLEM - CAMPGROUNDS");
@@ -51,7 +50,6 @@ app.get("/campgrounds", (req, res) =>{
             res.render("campgrounds/index", {
                 campgrounds: allCampgrounds,
                 currentUser: req.user
-                
             });
         }
     });
