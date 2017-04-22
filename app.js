@@ -26,7 +26,7 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.user((req, res, next) => {
+app.use((req, res, next) => {
    res.locals.currentUser = req.user;
    next();
 });
